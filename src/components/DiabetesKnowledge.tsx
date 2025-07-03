@@ -1,9 +1,10 @@
+import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, Heart, AlertCircle, TrendingUp } from "lucide-react";
 
-const DiabetesKnowledge = () => {
+const DiabetesKnowledge: React.FC = () => {
   return (
     <Card className="shadow-medical">
       <CardHeader>
@@ -30,19 +31,19 @@ const DiabetesKnowledge = () => {
               <h3 className="font-semibold text-foreground">What is Diabetes?</h3>
               <p className="text-sm text-muted-foreground">
                 Diabetes is a group of metabolic disorders characterized by high blood sugar levels. 
-                It occurs when your body doesn't produce enough insulin or can't effectively use the insulin it produces.
+                It occurs when your body doesn&apos;t produce enough insulin or can&apos;t effectively use the insulin it produces.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="p-3 bg-medical-light rounded-lg">
                   <h4 className="font-medium text-medical-blue mb-1">Type 1 Diabetes</h4>
                   <p className="text-xs text-muted-foreground">
-                    Body doesn't produce insulin. Usually diagnosed in children and young adults.
+                    Body doesn&apos;t produce insulin. Usually diagnosed in children and young adults.
                   </p>
                 </div>
                 <div className="p-3 bg-wellness-light rounded-lg">
                   <h4 className="font-medium text-wellness-green mb-1">Type 2 Diabetes</h4>
                   <p className="text-xs text-muted-foreground">
-                    Body doesn't use insulin properly. Most common form, often linked to lifestyle.
+                    Body doesn&apos;t use insulin properly. Most common form, often linked to lifestyle.
                   </p>
                 </div>
               </div>
@@ -127,14 +128,14 @@ const DiabetesKnowledge = () => {
                     <li>• Check blood sugar upon waking</li>
                     <li>• Take morning medications</li>
                     <li>• Eat a balanced breakfast</li>
-                    <li>• Plan your day's meals</li>
+                    <li>• Plan your day&apos;s meals</li>
                   </ul>
                 </div>
                 <div className="p-3 bg-wellness-light rounded-lg">
                   <h4 className="font-medium text-wellness-green mb-2">Evening Routine</h4>
                   <ul className="text-sm text-muted-foreground space-y-1">
                     <li>• Check blood sugar before bed</li>
-                    <li>• Reflect on the day's choices</li>
+                    <li>• Reflect on the day&apos;s choices</li>
                     <li>• Prepare healthy snacks</li>
                     <li>• Ensure good sleep hygiene</li>
                   </ul>
