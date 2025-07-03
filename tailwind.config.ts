@@ -52,6 +52,10 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				'medical-blue': 'hsl(var(--medical-blue))',
+				'medical-light': 'hsl(var(--medical-light))',
+				'wellness-green': 'hsl(var(--wellness-green))',
+				'wellness-light': 'hsl(var(--wellness-light))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -62,6 +66,14 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				}
+			},
+			backgroundImage: {
+				'gradient-medical': 'var(--gradient-medical)',
+				'gradient-card': 'var(--gradient-card)',
+			},
+			boxShadow: {
+				'medical': 'var(--shadow-medical)',
+				'wellness': 'var(--shadow-wellness)',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
