@@ -1,11 +1,29 @@
+import { useState, useEffect } from "react";
 import SugarLevelTracker from "@/components/SugarLevelTracker";
 import DietSuggestions from "@/components/DietSuggestions";
 import MedicineRecommendations from "@/components/MedicineRecommendations";
 import ExerciseRecommendations from "@/components/ExerciseRecommendations";
+import UserProfile from "@/components/UserProfile";
+import DiabetesKnowledge from "@/components/DiabetesKnowledge";
+import AIChatbot from "@/components/AIChatbot";
 import heroImage from "@/assets/hero-medical.jpg";
 import { Heart, Activity, Pill, Dumbbell } from "lucide-react";
 
 const Index = () => {
+  const [userName, setUserName] = useState<string>("");
+
+  useEffect(() => {
+    const savedName = localStorage.getItem("diaoctor-user-name");
+    if (savedName) {
+      setUserName(savedName);
+    }
+  }, []);
+
+  const handleNameChange = (name: string) => {
+    setUserName(name);
+    localStorage.setItem("diaoctor-user-name", name);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
@@ -47,16 +65,36 @@ const Index = () => {
       {/* Main Content */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            <div className="space-y-8">
-              <SugarLevelTracker />
-              <MedicineRecommendations />
-            </div>
-            <div className="space-y-8">
-              <DietSuggestions />
-              <ExerciseRecommendations />
-            </div>
+          {/* User Profile Section */}
+          <div className="max-w-md mx-auto mb-12">
+            <UserProfile userName={userName} onNameChange={handleNameChange} />
           </div>
+          
+          {userName && (
+            <>
+              {/* Knowledge Section */}
+              <div className="max-w-4xl mx-auto mb-12">
+                <DiabetesKnowledge />
+              </div>
+              
+              {/* Tools Grid */}
+              <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-12">
+                <div className="space-y-8">
+                  <SugarLevelTracker />
+                  <MedicineRecommendations />
+                </div>
+                <div className="space-y-8">
+                  <DietSuggestions />
+                  <ExerciseRecommendations />
+                </div>
+              </div>
+              
+              {/* AI Chatbot Section */}
+              <div className="max-w-2xl mx-auto">
+                <AIChatbot />
+              </div>
+            </>
+          )}
         </div>
       </section>
 
