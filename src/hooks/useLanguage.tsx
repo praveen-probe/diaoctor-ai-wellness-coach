@@ -55,7 +55,12 @@ const translations: Record<string, Record<string, string>> = {
     'food.vegetables': 'Mixed vegetables',
     'food.salmon': 'Baked salmon',
     'food.sweet_potato': 'Sweet potato',
-    'food.broccoli': 'Steamed broccoli'
+    'food.broccoli': 'Steamed broccoli',
+    // Voice feedback
+    'voice.low_sugar': 'Your blood sugar is low',
+    'voice.normal_sugar': 'Your blood sugar is normal',
+    'voice.high_sugar': 'Your blood sugar is high',
+    'voice.very_high_sugar': 'Your blood sugar is very high'
   },
   ta: {
     // Exercise translations in Tamil
@@ -83,7 +88,12 @@ const translations: Record<string, Record<string, string>> = {
     'food.vegetables': 'கலப்பு காய்கறிகள்',
     'food.salmon': 'சுட்ட சால்மன்',
     'food.sweet_potato': 'இனிப்பு உருளைக்கிழங்கு',
-    'food.broccoli': 'வேகவைத்த ப்ராக்கோலி'
+    'food.broccoli': 'வேகவைத்த ப்ராக்கோலி',
+    // Voice feedback in Tamil
+    'voice.low_sugar': 'உங்கள் இரத்த சர்க்கரை குறைவு',
+    'voice.normal_sugar': 'உங்கள் இரத்த சர்க்கரை சாதாரணம்',
+    'voice.high_sugar': 'உங்கள் இரத்த சர்க்கரை அதிகம்',
+    'voice.very_high_sugar': 'உங்கள் இரத்த சர்க்கரை மிக அதிகம்'
   }
 };
 

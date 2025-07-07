@@ -1,109 +1,212 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Activity, TrendingUp, TrendingDown } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import VoiceSettings, { VoiceSettings as VoiceSettingsType } from "@/components/VoiceSettings";
+import { useVoiceFeedback } from "@/hooks/useVoiceFeedback";
+import { Activity, Plus, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-const SugarLevelTracker = () => {
-  const [sugarLevel, setSugarLevel] = useState("");
-  const [lastReading, setLastReading] = useState<number | null>(null);
-  const { toast } = useToast();
+interface SugarReading {
+  id: string;
+  level: number;
+  timestamp: Date;
+  category: string;
+}
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const level = parseFloat(sugarLevel);
-    if (isNaN(level)) return;
-    
-    setLastReading(level);
-    setSugarLevel("");
-    
-    let status = "";
-    let variant: "default" | "destructive" = "default";
-    
-    if (level < 70) {
-      status = "Low - Please consume fast-acting carbohydrates immediately";
-      variant = "destructive";
-    } else if (level >= 70 && level <= 140) {
-      status = "Normal - Good job maintaining healthy levels!";
-    } else if (level > 140 && level <= 200) {
-      status = "Elevated - Consider light exercise and avoid sugary foods";
-      variant = "destructive";
-    } else {
-      status = "High - Please consult your healthcare provider immediately";
-      variant = "destructive";
+const SugarLevelTracker = () => {
+  const [currentLevel, setCurrentLevel] = useState<string>("");
+  const [readings, setReadings] = useState<SugarReading[]>([]);
+  const [voiceSettings, setVoiceSettings] = useState<VoiceSettingsType>({
+    apiKey: '',
+    voiceId: 'EXAVITQu4vr4xnSDxMaL',
+    enabled: false,
+    volume: 0.7
+  });
+  const { toast } = useToast();
+  const { announceBloodSugar } = useVoiceFeedback(voiceSettings);
+
+  useEffect(() => {
+    const savedReadings = localStorage.getItem("diaoctor-readings");
+    if (savedReadings) {
+      const parsed = JSON.parse(savedReadings);
+      setReadings(parsed.map((r: any) => ({
+        ...r,
+        timestamp: new Date(r.timestamp)
+      })));
     }
-    
+  }, []);
+
+  const getCategory = (level: number): string => {
+    if (level < 70) return "Low";
+    if (level <= 140) return "Normal";
+    if (level <= 200) return "High";
+    return "Very High";
+  };
+
+  const addReading = async () => {
+    const level = parseFloat(currentLevel);
+    if (isNaN(level) || level <= 0) {
+      toast({
+        title: "Invalid Input",
+        description: "Please enter a valid blood sugar level.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const newReading: SugarReading = {
+      id: Date.now().toString(),
+      level,
+      timestamp: new Date(),
+      category: getCategory(level),
+    };
+
+    const updatedReadings = [newReading, ...readings.slice(0, 9)];
+    setReadings(updatedReadings);
+    localStorage.setItem("diaoctor-readings", JSON.stringify(updatedReadings));
+    setCurrentLevel("");
+
+    // Announce the blood sugar level with voice feedback
+    if (voiceSettings.enabled) {
+      await announceBloodSugar(level);
+    }
+
     toast({
-      title: "Sugar Level Recorded",
-      description: status,
-      variant,
+      title: "Reading Added",
+      description: `Blood sugar level: ${level} mg/dL (${newReading.category})`,
     });
   };
 
-  const getSugarLevelStatus = (level: number) => {
-    if (level < 70) return { text: "Low", color: "text-destructive", icon: TrendingDown };
-    if (level <= 140) return { text: "Normal", color: "text-wellness-green", icon: Activity };
-    if (level <= 200) return { text: "Elevated", color: "text-orange-500", icon: TrendingUp };
-    return { text: "High", color: "text-destructive", icon: TrendingUp };
+  const removeReading = (id: string) => {
+    const updatedReadings = readings.filter(reading => reading.id !== id);
+    setReadings(updatedReadings);
+    localStorage.setItem("diaoctor-readings", JSON.stringify(updatedReadings));
+    toast({
+      title: "Reading Removed",
+      description: "Blood sugar reading has been deleted.",
+    });
   };
+
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case "Low":
+        return "bg-orange-100 text-orange-800 border-orange-300";
+      case "Normal":
+        return "bg-wellness-green/20 text-wellness-green border-wellness-green/30";
+      case "High":
+        return "bg-red-100 text-red-800 border-red-300";
+      case "Very High":
+        return "bg-red-200 text-red-900 border-red-400";
+      default:
+        return "bg-secondary text-secondary-foreground";
+    }
+  };
+
+  const getTrend = () => {
+    if (readings.length < 2) return null;
+    const latest = readings[0].level;
+    const previous = readings[1].level;
+    if (latest > previous) return { icon: TrendingUp, color: "text-red-500", text: "Rising" };
+    if (latest < previous) return { icon: TrendingDown, color: "text-wellness-green", text: "Falling" };
+    return { icon: Activity, color: "text-medical-blue", text: "Stable" };
+  };
+
+  const trend = getTrend();
 
   return (
     <Card className="bg-gradient-card shadow-medical border-0">
       <CardHeader className="text-center">
-        <CardTitle className="flex items-center justify-center gap-2 text-foreground">
-          <Activity className="w-6 h-6 text-medical-blue" />
-          Blood Sugar Tracker
-        </CardTitle>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Activity className="w-6 h-6 text-medical-blue" />
+            <CardTitle className="text-foreground">Blood Sugar Tracker</CardTitle>
+          </div>
+          <VoiceSettings onSettingsChange={setVoiceSettings} />
+        </div>
         <CardDescription>
-          Monitor your glucose levels and get instant feedback
+          Monitor your blood glucose levels throughout the day with voice feedback
         </CardDescription>
       </CardHeader>
+      
       <CardContent className="space-y-6">
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="sugar-level">Blood Sugar Level (mg/dL)</Label>
-            <Input
-              id="sugar-level"
-              type="number"
-              placeholder="Enter your reading..."
-              value={sugarLevel}
-              onChange={(e) => setSugarLevel(e.target.value)}
-              className="border-medical-light focus:border-medical-blue"
-            />
-          </div>
+        {/* Input Section */}
+        <div className="flex gap-2">
+          <Input
+            type="number"
+            placeholder="Enter reading (mg/dL)"
+            value={currentLevel}
+            onChange={(e) => setCurrentLevel(e.target.value)}
+            className="border-medical-light focus:border-medical-blue"
+            onKeyPress={(e) => e.key === 'Enter' && addReading()}
+          />
           <Button 
-            type="submit" 
-            className="w-full bg-medical-blue hover:bg-medical-blue/90"
-            disabled={!sugarLevel}
+            onClick={addReading}
+            disabled={!currentLevel}
+            className="bg-medical-blue hover:bg-medical-blue/90"
           >
-            Record Reading
+            <Plus className="w-4 h-4" />
           </Button>
-        </form>
-        
-        {lastReading && (
-          <div className="p-4 rounded-lg bg-wellness-light border border-wellness-green/20">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium">Last Reading:</span>
-              <div className="flex items-center gap-2">
-                {(() => {
-                  const status = getSugarLevelStatus(lastReading);
-                  const Icon = status.icon;
-                  return (
-                    <>
-                      <span className="font-bold">{lastReading} mg/dL</span>
-                      <Icon className={`w-4 h-4 ${status.color}`} />
-                      <span className={`text-sm font-medium ${status.color}`}>
-                        {status.text}
-                      </span>
-                    </>
-                  );
-                })()}
-              </div>
+        </div>
+
+        {/* Trend Indicator */}
+        {trend && readings.length > 0 && (
+          <div className="flex items-center justify-between p-3 rounded-lg bg-muted">
+            <span className="text-sm font-medium">Latest: {readings[0].level} mg/dL</span>
+            <div className="flex items-center gap-2">
+              <trend.icon className={`w-4 h-4 ${trend.color}`} />
+              <span className={`text-sm font-medium ${trend.color}`}>{trend.text}</span>
             </div>
           </div>
         )}
+
+        {/* Recent Readings */}
+        <div className="space-y-2">
+          <h3 className="font-semibold text-foreground">Recent Readings</h3>
+          {readings.length === 0 ? (
+            <p className="text-sm text-muted-foreground text-center py-4">
+              No readings yet. Add your first blood sugar reading above.
+            </p>
+          ) : (
+            <div className="space-y-2">
+              {readings.map((reading) => (
+                <div key={reading.id} className="flex items-center justify-between p-3 rounded-lg bg-muted">
+                  <div className="flex items-center gap-3">
+                    <span className="font-medium">{reading.level} mg/dL</span>
+                    <Badge variant="outline" className={getCategoryColor(reading.category)}>
+                      {reading.category}
+                    </Badge>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-muted-foreground">
+                      {reading.timestamp.toLocaleTimeString()}
+                    </span>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => removeReading(reading.id)}
+                      className="text-muted-foreground hover:text-destructive"
+                    >
+                      <Minus className="w-3 h-3" />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Quick Tips */}
+        <div className="p-3 rounded-lg bg-medical-light border border-medical-blue/20">
+          <h4 className="font-medium text-medical-blue mb-2">Quick Reference</h4>
+          <div className="grid grid-cols-2 gap-2 text-xs">
+            <div>Normal: 70-140 mg/dL</div>
+            <div>High: 141-200 mg/dL</div>
+            <div>Low: &lt;70 mg/dL</div>
+            <div>Very High: &gt;200 mg/dL</div>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );
