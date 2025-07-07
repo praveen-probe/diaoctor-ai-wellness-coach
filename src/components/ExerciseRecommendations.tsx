@@ -1,40 +1,43 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dumbbell, Clock, Heart } from "lucide-react";
+import { useLanguage } from "@/hooks/useLanguage";
 
 const ExerciseRecommendations = () => {
+  const { t } = useLanguage();
+
   const exercises = [
     {
-      category: "Cardio Exercises",
+      category: t("exercise.cardio"),
       icon: Heart,
       color: "text-medical-blue",
       exercises: [
-        { name: "Brisk Walking", duration: "30 minutes", frequency: "5 days/week", intensity: "Moderate" },
-        { name: "Swimming", duration: "20-30 minutes", frequency: "3 days/week", intensity: "Low impact" },
-        { name: "Cycling", duration: "25 minutes", frequency: "4 days/week", intensity: "Moderate" },
-        { name: "Dancing", duration: "20 minutes", frequency: "3 days/week", intensity: "Fun & engaging" }
+        { name: t("exercise.brisk_walking"), duration: "30 min", frequency: "5 days/week", intensity: "Moderate", totalMinutes: 150 },
+        { name: t("exercise.swimming"), duration: "25 min", frequency: "3 days/week", intensity: "Low impact", totalMinutes: 75 },
+        { name: t("exercise.cycling"), duration: "25 min", frequency: "4 days/week", intensity: "Moderate", totalMinutes: 100 },
+        { name: t("exercise.dancing"), duration: "20 min", frequency: "3 days/week", intensity: "Fun & engaging", totalMinutes: 60 }
       ]
     },
     {
-      category: "Strength Training",
+      category: t("exercise.strength"),
       icon: Dumbbell,
       color: "text-wellness-green",
       exercises: [
-        { name: "Bodyweight Squats", duration: "3 sets of 10", frequency: "3 days/week", intensity: "Beginner" },
-        { name: "Wall Push-ups", duration: "3 sets of 8", frequency: "3 days/week", intensity: "Beginner" },
-        { name: "Resistance Bands", duration: "15 minutes", frequency: "3 days/week", intensity: "Light" },
-        { name: "Light Dumbbells", duration: "20 minutes", frequency: "2 days/week", intensity: "Progressive" }
+        { name: t("exercise.squats"), duration: "15 min", frequency: "3 days/week", intensity: "Beginner", totalMinutes: 45 },
+        { name: t("exercise.pushups"), duration: "10 min", frequency: "3 days/week", intensity: "Beginner", totalMinutes: 30 },
+        { name: t("exercise.resistance"), duration: "15 min", frequency: "3 days/week", intensity: "Light", totalMinutes: 45 },
+        { name: t("exercise.dumbbells"), duration: "20 min", frequency: "2 days/week", intensity: "Progressive", totalMinutes: 40 }
       ]
     },
     {
-      category: "Flexibility & Balance",
+      category: t("exercise.flexibility"),
       icon: Clock,
       color: "text-purple-600",
       exercises: [
-        { name: "Yoga", duration: "15-30 minutes", frequency: "Daily", intensity: "Gentle" },
-        { name: "Tai Chi", duration: "20 minutes", frequency: "3 days/week", intensity: "Low impact" },
-        { name: "Stretching", duration: "10 minutes", frequency: "Daily", intensity: "Gentle" },
-        { name: "Balance exercises", duration: "10 minutes", frequency: "Daily", intensity: "Stability focused" }
+        { name: t("exercise.yoga"), duration: "20 min", frequency: "Daily", intensity: "Gentle", totalMinutes: 140 },
+        { name: t("exercise.tai_chi"), duration: "20 min", frequency: "3 days/week", intensity: "Low impact", totalMinutes: 60 },
+        { name: t("exercise.stretching"), duration: "10 min", frequency: "Daily", intensity: "Gentle", totalMinutes: 70 },
+        { name: t("exercise.balance"), duration: "10 min", frequency: "Daily", intensity: "Stability focused", totalMinutes: 70 }
       ]
     }
   ];
@@ -83,9 +86,14 @@ const ExerciseRecommendations = () => {
                   <div key={exerciseIndex} className="p-3 rounded-lg bg-wellness-light border border-wellness-green/20">
                     <div className="flex items-center justify-between mb-2">
                       <h4 className="font-medium text-foreground">{exercise.name}</h4>
-                      <Badge variant="secondary" className={getIntensityColor(exercise.intensity)}>
-                        {exercise.intensity}
-                      </Badge>
+                      <div className="flex gap-2">
+                        <Badge variant="outline" className="bg-medical-blue/10 text-medical-blue border-medical-blue/30">
+                          {exercise.totalMinutes} min/week
+                        </Badge>
+                        <Badge variant="secondary" className={getIntensityColor(exercise.intensity)}>
+                          {exercise.intensity}
+                        </Badge>
+                      </div>
                     </div>
                     <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground">
                       <div className="flex items-center gap-1">

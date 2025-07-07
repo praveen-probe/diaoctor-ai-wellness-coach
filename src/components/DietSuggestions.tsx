@@ -1,33 +1,36 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Book } from "lucide-react";
+import { useLanguage } from "@/hooks/useLanguage";
 
 const DietSuggestions = () => {
+  const { t } = useLanguage();
+
   const mealPlans = [
     {
       meal: "Breakfast",
       foods: [
-        { name: "Oatmeal with berries", carbs: "30g", protein: "6g" },
-        { name: "Greek yogurt", carbs: "12g", protein: "15g" },
-        { name: "Whole grain toast", carbs: "15g", protein: "3g" }
+        { name: t("food.oatmeal"), carbs: "30g", protein: "6g" },
+        { name: t("food.yogurt"), carbs: "12g", protein: "15g" },
+        { name: t("food.toast"), carbs: "15g", protein: "3g" }
       ],
       totalCarbs: "57g"
     },
     {
       meal: "Lunch", 
       foods: [
-        { name: "Grilled chicken breast", carbs: "0g", protein: "26g" },
-        { name: "Quinoa salad", carbs: "22g", protein: "4g" },
-        { name: "Mixed vegetables", carbs: "10g", protein: "2g" }
+        { name: t("food.chicken"), carbs: "0g", protein: "26g" },
+        { name: t("food.quinoa"), carbs: "22g", protein: "4g" },
+        { name: t("food.vegetables"), carbs: "10g", protein: "2g" }
       ],
       totalCarbs: "32g"
     },
     {
       meal: "Dinner",
       foods: [
-        { name: "Baked salmon", carbs: "0g", protein: "25g" },
-        { name: "Sweet potato", carbs: "26g", protein: "2g" },
-        { name: "Steamed broccoli", carbs: "6g", protein: "3g" }
+        { name: t("food.salmon"), carbs: "0g", protein: "25g" },
+        { name: t("food.sweet_potato"), carbs: "26g", protein: "2g" },
+        { name: t("food.broccoli"), carbs: "6g", protein: "3g" }
       ],
       totalCarbs: "32g"
     }

@@ -6,6 +6,7 @@ import ExerciseRecommendations from "@/components/ExerciseRecommendations";
 import UserProfile from "@/components/UserProfile";
 import DiabetesKnowledge from "@/components/DiabetesKnowledge";
 import AIChatbot from "@/components/AIChatbot";
+import LanguageSelector from "@/components/LanguageSelector";
 import heroImage from "@/assets/hero-medical.jpg";
 import { Heart, Activity, Pill, Dumbbell } from "lucide-react";
 
@@ -65,6 +66,11 @@ const Index = () => {
       {/* Main Content */}
       <section className="py-16">
         <div className="container mx-auto px-4">
+          {/* Language Selector */}
+          <div className="flex justify-center mb-8">
+            <LanguageSelector />
+          </div>
+          
           {/* User Profile Section */}
           <div className="max-w-md mx-auto mb-12">
             <UserProfile userName={userName} onNameChange={handleNameChange} />
