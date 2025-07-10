@@ -80,36 +80,28 @@ const Index = () => {
           
           {userName && (
             <>
-              {/* Doctor & Appointment Section */}
-              <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-12">
-                <DoctorFinder />
-                <AppointmentBooking />
-              </div>
-              
-              {/* Health Tracking Section */}
-              <div className="max-w-4xl mx-auto mb-12">
+              {/* Main Health Dashboard */}
+              <div className="max-w-6xl mx-auto space-y-8">
+                {/* Doctor & Appointments Row */}
+                <div className="grid lg:grid-cols-2 gap-6">
+                  <DoctorFinder />
+                  <AppointmentBooking />
+                </div>
+                
+                {/* Health Tracking */}
                 <HealthTracker />
-              </div>
-              
-              {/* Wellness & Knowledge Section */}
-              <div className="max-w-4xl mx-auto mb-12">
-                <HealthKnowledge />
-              </div>
-              
-              {/* Health Tools Grid */}
-              <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-12">
-                <div className="space-y-8">
+                
+                {/* Health Tools Row */}
+                <div className="grid lg:grid-cols-3 gap-6">
                   <DietSuggestions />
+                  <ExerciseRecommendations />
                   <MedicineRecommendations />
                 </div>
-                <div className="space-y-8">
-                  <ExerciseRecommendations />
+                
+                {/* AI Chat */}
+                <div className="max-w-2xl mx-auto">
+                  <AIChatbot />
                 </div>
-              </div>
-              
-              {/* AI Chatbot Section */}
-              <div className="max-w-2xl mx-auto">
-                <AIChatbot />
               </div>
             </>
           )}
