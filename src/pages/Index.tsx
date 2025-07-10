@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
-import SugarLevelTracker from "@/components/SugarLevelTracker";
+import HealthTracker from "@/components/HealthTracker";
+import DoctorFinder from "@/components/DoctorFinder";
+import AppointmentBooking from "@/components/AppointmentBooking";
 import DietSuggestions from "@/components/DietSuggestions";
 import MedicineRecommendations from "@/components/MedicineRecommendations";
 import ExerciseRecommendations from "@/components/ExerciseRecommendations";
 import UserProfile from "@/components/UserProfile";
-import DiabetesKnowledge from "@/components/DiabetesKnowledge";
+import HealthKnowledge from "@/components/HealthKnowledge";
 import AIChatbot from "@/components/AIChatbot";
 import LanguageSelector from "@/components/LanguageSelector";
 import heroImage from "@/assets/hero-medical.jpg";
-import { Heart, Activity, Pill, Dumbbell } from "lucide-react";
+import { Heart, Activity, Pill, Dumbbell, Users, Calendar } from "lucide-react";
 
 const Index = () => {
   const [userName, setUserName] = useState<string>("");
@@ -36,27 +38,27 @@ const Index = () => {
         >
           <div className="container mx-auto px-4 text-center text-white relative z-10">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 drop-shadow-lg">
-              Diaoctor
+              MediConnect
             </h1>
             <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto drop-shadow-md">
-              Your AI-powered diabetes wellness coach for better health management
+              Your comprehensive health management platform - Connect with doctors, track health, and manage wellness
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-2xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-3xl mx-auto">
               <div className="text-center">
                 <Activity className="w-8 h-8 mx-auto mb-2" />
-                <span className="text-sm font-medium">Track Glucose</span>
+                <span className="text-sm font-medium">Health Tracking</span>
               </div>
               <div className="text-center">
                 <Heart className="w-8 h-8 mx-auto mb-2" />
-                <span className="text-sm font-medium">Diet Plans</span>
+                <span className="text-sm font-medium">Find Doctors</span>
               </div>
               <div className="text-center">
                 <Pill className="w-8 h-8 mx-auto mb-2" />
-                <span className="text-sm font-medium">Medicine Info</span>
+                <span className="text-sm font-medium">Book Appointments</span>
               </div>
               <div className="text-center">
                 <Dumbbell className="w-8 h-8 mx-auto mb-2" />
-                <span className="text-sm font-medium">Exercise Guide</span>
+                <span className="text-sm font-medium">Wellness Plans</span>
               </div>
             </div>
           </div>
@@ -78,19 +80,29 @@ const Index = () => {
           
           {userName && (
             <>
-              {/* Knowledge Section */}
-              <div className="max-w-4xl mx-auto mb-12">
-                <DiabetesKnowledge />
+              {/* Doctor & Appointment Section */}
+              <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-12">
+                <DoctorFinder />
+                <AppointmentBooking />
               </div>
               
-              {/* Tools Grid */}
+              {/* Health Tracking Section */}
+              <div className="max-w-4xl mx-auto mb-12">
+                <HealthTracker />
+              </div>
+              
+              {/* Wellness & Knowledge Section */}
+              <div className="max-w-4xl mx-auto mb-12">
+                <HealthKnowledge />
+              </div>
+              
+              {/* Health Tools Grid */}
               <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-12">
                 <div className="space-y-8">
-                  <SugarLevelTracker />
+                  <DietSuggestions />
                   <MedicineRecommendations />
                 </div>
                 <div className="space-y-8">
-                  <DietSuggestions />
                   <ExerciseRecommendations />
                 </div>
               </div>

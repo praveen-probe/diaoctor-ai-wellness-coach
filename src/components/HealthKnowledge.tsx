@@ -4,16 +4,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, Heart, AlertCircle, TrendingUp } from "lucide-react";
 
-const DiabetesKnowledge: React.FC = () => {
+const HealthKnowledge: React.FC = () => {
   return (
     <Card className="shadow-medical">
       <CardHeader>
         <div className="flex items-center space-x-2">
-          <BookOpen className="h-5 w-5 text-medical-blue" />
-          <CardTitle className="text-medical-blue">Diabetes Knowledge Center</CardTitle>
+          <BookOpen className="h-5 w-5 text-primary" />
+          <CardTitle className="text-primary">Health Knowledge Center</CardTitle>
         </div>
         <CardDescription>
-          Learn essential information about diabetes management and healthy living
+          Learn essential information about health management and wellness
         </CardDescription>
       </CardHeader>
       
@@ -156,4 +156,4 @@ const DiabetesKnowledge: React.FC = () => {
   );
 };
 
-export default DiabetesKnowledge;
+export default HealthKnowledge;

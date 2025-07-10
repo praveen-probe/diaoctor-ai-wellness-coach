@@ -101,7 +101,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [currentLanguage, setCurrentLanguage] = useState('en');
 
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('diaoctor-language');
+    const savedLanguage = localStorage.getItem('mediconnect-language');
     if (savedLanguage) {
       setCurrentLanguage(savedLanguage);
     }
@@ -109,7 +109,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const setLanguage = (code: string) => {
     setCurrentLanguage(code);
-    localStorage.setItem('diaoctor-language', code);
+    localStorage.setItem('mediconnect-language', code);
   };
 
   const t = (key: string): string => {
