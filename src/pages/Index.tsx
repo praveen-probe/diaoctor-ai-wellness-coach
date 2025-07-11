@@ -87,11 +87,13 @@ const Index = () => {
             <>
               {/* Main Health Dashboard */}
               <div className="max-w-6xl mx-auto space-y-8">
-                {/* Doctor & Appointments Row */}
-                <div className="grid lg:grid-cols-2 gap-6">
-                  <DoctorFinder onDoctorSelect={handleDoctorSelect} />
+                {/* Doctor Finder */}
+                <DoctorFinder onDoctorSelect={handleDoctorSelect} />
+                
+                {/* Appointment Booking - Shows only when doctor is selected */}
+                {selectedDoctor && (
                   <AppointmentBooking selectedDoctor={selectedDoctor} />
-                </div>
+                )}
                 
                 {/* Health Tracking */}
                 <HealthTracker />
