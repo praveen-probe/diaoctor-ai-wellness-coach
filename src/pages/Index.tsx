@@ -28,6 +28,10 @@ const Index = () => {
     localStorage.setItem("diaoctor-user-name", name);
   };
 
+  const handleCloseAppointment = () => {
+    setSelectedDoctor(null);
+  };
+
   const handleDoctorSelect = (doctor: any) => {
     setSelectedDoctor(doctor);
   };
@@ -92,7 +96,7 @@ const Index = () => {
                 
                 {/* Appointment Booking - Shows only when doctor is selected */}
                 {selectedDoctor && (
-                  <AppointmentBooking selectedDoctor={selectedDoctor} />
+                  <AppointmentBooking selectedDoctor={selectedDoctor} onClose={handleCloseAppointment} />
                 )}
                 
                 {/* Health Tracking */}
