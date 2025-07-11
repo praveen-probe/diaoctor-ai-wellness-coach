@@ -87,7 +87,7 @@ const AppointmentBooking = ({ selectedDoctor }: AppointmentBookingProps) => {
       <CardContent className="space-y-6">
         {/* Selected Doctor Info */}
         {selectedDoctor && (
-          <div className="border rounded-lg p-4 bg-primary/5">
+          <div className="border rounded-lg p-4 bg-primary/5 select-none">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
                 <span className="text-sm font-semibold text-primary">
@@ -111,8 +111,16 @@ const AppointmentBooking = ({ selectedDoctor }: AppointmentBookingProps) => {
               <Button
                 key={day.date}
                 variant={selectedDate === day.date ? "default" : "outline"}
-                className="flex flex-col p-3 h-auto"
-                onClick={() => setSelectedDate(day.date)}
+                className="flex flex-col p-3 h-auto select-none touch-manipulation"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setSelectedDate(day.date);
+                }}
+                onTouchEnd={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }}
               >
                 <span className="text-xs">{day.day}</span>
                 <span className="text-lg font-bold">{day.dayNumber}</span>
@@ -127,16 +135,24 @@ const AppointmentBooking = ({ selectedDoctor }: AppointmentBookingProps) => {
           <div className="flex gap-3">
             <Button
               variant={consultationType === "video" ? "default" : "outline"}
-              onClick={() => setConsultationType("video")}
-              className="flex items-center gap-2"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setConsultationType("video");
+              }}
+              className="flex items-center gap-2 select-none touch-manipulation"
             >
               <Video className="w-4 h-4" />
               {getText('videoCall')}
             </Button>
             <Button
               variant={consultationType === "in-person" ? "default" : "outline"}
-              onClick={() => setConsultationType("in-person")}
-              className="flex items-center gap-2"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setConsultationType("in-person");
+              }}
+              className="flex items-center gap-2 select-none touch-manipulation"
             >
               <User className="w-4 h-4" />
               {getText('inPerson')}
@@ -154,8 +170,12 @@ const AppointmentBooking = ({ selectedDoctor }: AppointmentBookingProps) => {
                   key={time}
                   variant={selectedTime === time ? "default" : "outline"}
                   size="sm"
-                  onClick={() => setSelectedTime(time)}
-                  className="flex items-center gap-1"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setSelectedTime(time);
+                  }}
+                  className="flex items-center gap-1 select-none touch-manipulation"
                 >
                   <Clock className="w-3 h-3" />
                   {time}
@@ -195,7 +215,15 @@ const AppointmentBooking = ({ selectedDoctor }: AppointmentBookingProps) => {
                 </Badge>
               </div>
             </div>
-            <Button className="w-full mt-4" size="lg">
+            <Button 
+              className="w-full mt-4 select-none touch-manipulation" 
+              size="lg"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                // Handle booking confirmation here
+              }}
+            >
               {getText('confirmBooking')}
             </Button>
           </div>
