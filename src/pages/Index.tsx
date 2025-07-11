@@ -43,7 +43,7 @@ const Index = () => {
         >
           <div className="container mx-auto px-4 text-center text-white relative z-10">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 drop-shadow-lg">
-              MediConnect
+              Dioactor
             </h1>
             <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto drop-shadow-md">
               Your comprehensive health management platform - Connect with doctors, track health, and manage wellness
