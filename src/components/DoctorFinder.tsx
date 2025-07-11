@@ -7,7 +7,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Star, MapPin, Clock, Search, Filter } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 
-const DoctorFinder = () => {
+interface DoctorFinderProps {
+  onDoctorSelect?: (doctor: any) => void;
+}
+
+const DoctorFinder = ({ onDoctorSelect }: DoctorFinderProps) => {
   const { currentLanguage, t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSpecialty, setSelectedSpecialty] = useState("");
@@ -176,7 +180,7 @@ const DoctorFinder = () => {
                         <Button variant="outline" size="sm">
                           {getText('viewProfile')}
                         </Button>
-                        <Button size="sm">
+                        <Button size="sm" onClick={() => onDoctorSelect?.(doctor)}>
                           {getText('bookAppointment')}
                         </Button>
                       </div>

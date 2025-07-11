@@ -5,7 +5,11 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, Video, User, ChevronLeft, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 
-const AppointmentBooking = () => {
+interface AppointmentBookingProps {
+  selectedDoctor?: any;
+}
+
+const AppointmentBooking = ({ selectedDoctor }: AppointmentBookingProps) => {
   const { currentLanguage } = useLanguage();
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedTime, setSelectedTime] = useState<string>("");
@@ -77,10 +81,28 @@ const AppointmentBooking = () => {
           {getText('title')}
         </CardTitle>
         <CardDescription>
-          {getText('description')}
+          {selectedDoctor ? `Book appointment with ${selectedDoctor.name}` : getText('description')}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
+        {/* Selected Doctor Info */}
+        {selectedDoctor && (
+          <div className="border rounded-lg p-4 bg-primary/5">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+                <span className="text-sm font-semibold text-primary">
+                  {selectedDoctor.name.split(' ').map((n: string) => n[0]).join('')}
+                </span>
+              </div>
+              <div>
+                <h4 className="font-semibold">{selectedDoctor.name}</h4>
+                <p className="text-sm text-muted-foreground">{selectedDoctor.specialty}</p>
+                <p className="text-sm font-medium text-primary">${selectedDoctor.consultationFee}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Date Selection */}
         <div>
           <h3 className="text-lg font-semibold mb-3">{getText('selectDate')}</h3>

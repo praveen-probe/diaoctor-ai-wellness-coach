@@ -14,6 +14,7 @@ import { Heart, Activity, Pill, Dumbbell, Users, Calendar } from "lucide-react";
 
 const Index = () => {
   const [userName, setUserName] = useState<string>("");
+  const [selectedDoctor, setSelectedDoctor] = useState<any>(null);
 
   useEffect(() => {
     const savedName = localStorage.getItem("diaoctor-user-name");
@@ -25,6 +26,10 @@ const Index = () => {
   const handleNameChange = (name: string) => {
     setUserName(name);
     localStorage.setItem("diaoctor-user-name", name);
+  };
+
+  const handleDoctorSelect = (doctor: any) => {
+    setSelectedDoctor(doctor);
   };
 
   return (
@@ -84,8 +89,8 @@ const Index = () => {
               <div className="max-w-6xl mx-auto space-y-8">
                 {/* Doctor & Appointments Row */}
                 <div className="grid lg:grid-cols-2 gap-6">
-                  <DoctorFinder />
-                  <AppointmentBooking />
+                  <DoctorFinder onDoctorSelect={handleDoctorSelect} />
+                  <AppointmentBooking selectedDoctor={selectedDoctor} />
                 </div>
                 
                 {/* Health Tracking */}
