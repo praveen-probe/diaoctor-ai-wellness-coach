@@ -6,6 +6,7 @@ import DietSuggestions from "@/components/DietSuggestions";
 import ExerciseRecommendations from "@/components/ExerciseRecommendations";
 import MedicineRecommendations from "@/components/MedicineRecommendations";
 import HospitalLocator from "@/components/HospitalLocator";
+import TicTacToe from "@/components/TicTacToe";
 import UserProfile from "@/components/UserProfile";
 import HealthKnowledge from "@/components/HealthKnowledge";
 import AIChatbot from "@/components/AIChatbot";
@@ -110,6 +111,10 @@ const Index = () => {
                   <MedicineRecommendations />
                 </div>
                 
+                {/* Tic Tac Toe Game */}
+                <div className="flex justify-center">
+                  <TicTacToe />
+                </div>
                 {/* Hospital Locator */}
                 <HospitalLocator />
                 
