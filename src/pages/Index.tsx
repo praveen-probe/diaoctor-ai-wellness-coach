@@ -3,8 +3,9 @@ import HealthTracker from "@/components/HealthTracker";
 import DoctorFinder from "@/components/DoctorFinder";
 import AppointmentBooking from "@/components/AppointmentBooking";
 import DietSuggestions from "@/components/DietSuggestions";
-import MedicineRecommendations from "@/components/MedicineRecommendations";
 import ExerciseRecommendations from "@/components/ExerciseRecommendations";
+import MedicineRecommendations from "@/components/MedicineRecommendations";
+import HospitalLocator from "@/components/HospitalLocator";
 import UserProfile from "@/components/UserProfile";
 import HealthKnowledge from "@/components/HealthKnowledge";
 import AIChatbot from "@/components/AIChatbot";
@@ -108,6 +109,9 @@ const Index = () => {
                   <ExerciseRecommendations />
                   <MedicineRecommendations />
                 </div>
+                
+                {/* Hospital Locator */}
+                <HospitalLocator />
                 
                 {/* AI Chat */}
                 <div className="max-w-2xl mx-auto">
